@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const logger = require('../logger');
 
 const connectDb = async () => {
-  logger.log('info', 'Connecting to Mongo Db...');
+  logger.info('Connecting to Mongo Db...');
 
   const connectionOptions = {
     useNewUrlParser: true,
@@ -20,7 +20,7 @@ const connectDb = async () => {
 
   try {
     await mongoose.connect(process.env.MONGO_URL, connectionOptions);
-    logger.log('info', 'Connected to DB');
+    logger.info('Connected to DB');
   } catch (err) {
     throw err;
   }

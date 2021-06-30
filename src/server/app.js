@@ -1,9 +1,9 @@
 const express = require('express');
 const helmet = require('helmet');
-// const winston = require('winston'),
-//   expressWinston = require('express-winston');
+const morgan = require('morgan')
 
 const { errorHandler, serverStatus } = require('./middleware')
+
 
 module.exports = (apiRouter) => {
   const app = express();
@@ -15,17 +15,18 @@ module.exports = (apiRouter) => {
 
   app.use(express.urlencoded());
 
-  //using winston middleware logger
-  // app.use(
-  //   expressWinston.logger({
-  //     transports: [
-  //       new winston.transports.Console({
-  //         json: true,
-  //         colorize: true,
-  //       }),
-  //     ],
-  //   })
-  // );
+  //using morgan middleware logger
+  app.use(morgan(function (tokens, req, res) {
+  if (tokens.url(req, res).includes('service-worker')) return   
+  return ['_____________',
+    `Method: ${tokens.method(req, res)};`,
+    `Url: ${tokens.url(req, res)};`,
+    `Status code: ${tokens.status(req, res)};`,
+    tokens.res(req, res, 'content-length'), '-',
+    tokens['response-time'](req, res), 'ms',
+    '_____________'
+  ].join(' ')
+}))
 
   const started = new Date();
   app.use(serverStatus(started));

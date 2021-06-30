@@ -1,4 +1,5 @@
 const { Router } = require('express')
+const Boom = require('@hapi/boom')
 
 module.exports = () => {
     const router = Router()
