@@ -1,9 +1,8 @@
-const express = require('express');
-const helmet = require('helmet');
-const morgan = require('morgan')
+const express = require("express");
+const helmet = require("helmet");
+const morgan = require("morgan");
 
-const { errorHandler, serverStatus } = require('./middleware')
-
+const { errorHandler, serverStatus, loggerFormat } = require("./middleware");
 
 module.exports = (apiRouter) => {
   const app = express();
@@ -15,18 +14,7 @@ module.exports = (apiRouter) => {
 
   app.use(express.urlencoded());
 
-  //using morgan middleware logger
-  app.use(morgan(function (tokens, req, res) {
-  if (tokens.url(req, res).includes('service-worker')) return   
-  return ['_____________',
-    `Method: ${tokens.method(req, res)};`,
-    `Url: ${tokens.url(req, res)};`,
-    `Status code: ${tokens.status(req, res)};`,
-    tokens.res(req, res, 'content-length'), '-',
-    tokens['response-time'](req, res), 'ms',
-    '_____________'
-  ].join(' ')
-}))
+  app.use(morgan((tokens, req, res) => loggerFormat(tokens, req, res)))
 
   const started = new Date();
   app.use(serverStatus(started));
@@ -35,7 +23,7 @@ module.exports = (apiRouter) => {
   // app.use(auth());
 
   // main application router
-  app.use('/', apiRouter);
+  app.use("/", apiRouter);
 
   // error handler - app router should pass errors down to here
   app.use(errorHandler());
