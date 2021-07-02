@@ -17,7 +17,7 @@ services:
         command: bash -c "npm run start"
 
     chat-data-generator:
-      image: chat-test-data-generator:1.0.0
+      image: chat-test-data-generator:1.0.1
       container_name: chat-data-generator
       depends_on: 
         - mongodb

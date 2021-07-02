@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema({
 });
 
 const conversationSchema = new mongoose.Schema({
+  convId: String,
   participants: Array,
   utterances: Array
 });
