@@ -2,7 +2,7 @@ const express = require("express");
 const helmet = require("helmet");
 const morgan = require("morgan");
 
-const { errorHandler, serverStatus, loggerFormat } = require("./middleware");
+const { errorHandler, serverStatus, loggerFormat, cors, } = require("./middleware");
 
 module.exports = (apiRouter) => {
   const app = express();
@@ -21,6 +21,9 @@ module.exports = (apiRouter) => {
 
   //Can add auth middleware validating api key or bearer token
   // app.use(auth());
+
+  // checks cors requests against a whitelist
+  app.use(cors());
 
   // main application router
   app.use("/", apiRouter);

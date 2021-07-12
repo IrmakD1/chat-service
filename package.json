@@ -1,6 +1,6 @@
 {
   "name": "chat-service",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -21,6 +21,7 @@
   "homepage": "https://github.com/IrmakD1/chat-service#readme",
   "dependencies": {
     "@hapi/boom": "^9.1.2",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-winston": "^4.1.0",
     "helmet": "^4.6.0",
